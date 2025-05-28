@@ -28,7 +28,7 @@ public class FoodServiceImpl implements FoodService{
     @Autowired
     private FoodRepository foodRepository;
 
-    
+
     @Value("${aws.s3.bucketname}")
     private String bucketName;
 
