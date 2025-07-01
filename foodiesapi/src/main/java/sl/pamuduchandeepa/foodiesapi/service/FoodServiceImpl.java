@@ -13,12 +13,15 @@ import sl.pamuduchandeepa.foodiesapi.io.FoodResponse;
 import sl.pamuduchandeepa.foodiesapi.repository.FoodRepository;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImpl implements FoodService{
@@ -63,6 +66,40 @@ public class FoodServiceImpl implements FoodService{
         newFoodEntity.setImageUrl(imageUrl);
         newFoodEntity = foodRepository.save(newFoodEntity);
         return convertToResponse(newFoodEntity);
+    }
+
+    @Override
+    public List<FoodResponse> readFoods() {
+        List<FoodEntity> databaseEntities = foodRepository.findAll();
+        return databaseEntities.stream().map(object -> convertToResponse(object)).collect(Collectors.toList());
+    }
+
+    @Override
+    public FoodResponse readFood(String id) {
+       FoodEntity existingFood = foodRepository.findById(id).orElseThrow(()-> new RuntimeException("Food not found for this id: "+id));
+       return convertToResponse(existingFood);
+    }
+
+    @Override
+    public boolean deleteFile(String fileName) {
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .build();
+        s3Client.deleteObject(deleteObjectRequest);
+        return true;
+    }
+
+    @Override
+    public void deleteFood(String id) {
+        FoodResponse foodResponse = readFood(id);
+        String imageUrl = foodResponse.getImageUrl();
+        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/")+1);
+        boolean isFileDeleted = deleteFile(fileName);
+
+        if(isFileDeleted){
+            foodRepository.deleteById(foodResponse.getId());
+        }
     }
 
     private FoodEntity convertToEntity(FoodRequest request) {
