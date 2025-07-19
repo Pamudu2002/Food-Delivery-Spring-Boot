@@ -337,7 +337,7 @@ const ListFood = () => {
                             <Edit className="w-5 h-5" />
                           </button>
                           <button
-                            onClick={() => handleDelete(item.id)}
+                            onClick={() =>  lete(item.id)}
                             className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200"
                             title="Delete Item"
                           >
