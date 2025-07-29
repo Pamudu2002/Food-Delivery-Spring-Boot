@@ -103,7 +103,7 @@ function FoodCard({ food, index }) {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+              <p className="text-sm text-slate-600 mb-4 leading-relaxed line-clamp-2">
                 {truncateDescription(food.description)}
               </p>
 
