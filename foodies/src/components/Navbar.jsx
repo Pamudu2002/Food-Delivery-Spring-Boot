@@ -10,7 +10,7 @@ function Navbar() {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/home', icon: Home },
+    { name: 'Home', href: '/', icon: Home },
     { name: 'Explore', href: '/explore', icon: Compass },
     { name: 'Contact Us', href: '/contact', icon: MessageCircle }
   ];

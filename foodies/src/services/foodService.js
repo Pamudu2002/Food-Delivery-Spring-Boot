@@ -12,3 +12,14 @@ export const fetchFoodItems = async () => {
     throw error;
   }
 };
+
+export const fetchFoodById = async (foodId) => {
+  try {
+    const response = await axios.get(`${API_URL}/${foodId}`);
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching food item by ID:", error);
+    throw error;
+  }
+};

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Heart, Eye } from 'lucide-react';
+import {Link} from 'react-router-dom';
 
 function FoodCard({ food, index }) {
 
@@ -44,10 +45,7 @@ function FoodCard({ food, index }) {
     });
   };
 
-  const handleViewFood = (food) => {
-    // Handle view food functionality
-    console.log('View food:', food);
-  };
+
 
   return (
     <>
@@ -108,13 +106,14 @@ function FoodCard({ food, index }) {
               </p>
 
               {/* Action Button */}
+              <Link to={`/food/${food.id}`}>
               <button
-                onClick={() => handleViewFood(food)}
                 className="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-3 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 group"
               >
                 <Eye size={18} className="group-hover:scale-110 transition-transform" />
                 View Food
               </button>
+              </Link>
             </div>
           </div>
     </>

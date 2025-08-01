@@ -18,7 +18,7 @@ const AddFood = () => {
 
   const categories = [
     'Pizza',
-    'Biryani',
+    'Biriyani',
     'Burger',
     'Pasta',
     'Chinese',
